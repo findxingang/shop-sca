@@ -20,8 +20,7 @@ public class OrderItem implements Serializable {
     /**
      * 数据id
      */
-    @TableId(value = "id", type = IdType.INPUT)
-    @TableField(value = "id", fill = FieldFill.INSERT)
+    @TableId
     private Long id;
 
     @TableField("t_order_id")

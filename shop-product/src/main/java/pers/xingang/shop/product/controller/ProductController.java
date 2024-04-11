@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pers.xingang.shop.bean.Product;
 import pers.xingang.shop.product.service.ProductService;
+import pers.xingang.shop.utils.constants.HttpCode;
+import pers.xingang.shop.utils.resp.Result;
 
 import javax.annotation.Resource;
 
@@ -32,9 +34,9 @@ public class ProductController {
     }
 
     @GetMapping(value = "/update_count/{pid}/{count}")
-    public ResponseEntity<Integer> updateCount(@PathVariable("pid") Long pid, @PathVariable("count") Integer count){
+    public Result<Integer> updateCount(@PathVariable("pid") Long pid, @PathVariable("count") Integer count){
         log.info("更新商品库存传递的参数为: 商品id:{}, 购买数量:{} ", pid, count);
         int updateCount = productService.updateProductStockById(count, pid);
-        return new ResponseEntity<>(updateCount, HttpStatus.OK);
+        return new Result<>(HttpCode.SUCCESS, "执行成功", updateCount);
     }
 }

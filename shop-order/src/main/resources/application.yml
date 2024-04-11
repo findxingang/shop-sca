@@ -6,3 +6,19 @@ spring:
     url: jdbc:mysql://47.103.73.130:3306/sa_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: MyNewPass4!
+server:
+  port: 8080
+  servlet:
+    context-path: /order
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
+      table-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    jdbc-type-for-null: 'null'

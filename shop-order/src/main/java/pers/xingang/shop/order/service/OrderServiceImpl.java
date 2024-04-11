@@ -14,6 +14,8 @@ import pers.xingang.shop.bean.User;
 import pers.xingang.shop.order.mapper.OrderItemMapper;
 import pers.xingang.shop.order.mapper.OrderMapper;
 import pers.xingang.shop.param.OrderParams;
+import pers.xingang.shop.utils.constants.HttpCode;
+import pers.xingang.shop.utils.resp.Result;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -74,9 +76,8 @@ public class OrderServiceImpl implements OrderService{
         orderItemMapper.insert(orderItem);
 
         // 调用商品服务扣减库存
-        ResponseEntity result = restTemplate.getForObject("http://localhost:8070/product/update_count/" + orderParams.getProductId() + "/" + orderParams.getCount(), ResponseEntity.class);
-        assert result != null;
-        if (result.getStatusCode() != HttpStatus.OK){
+        Result<Integer> result = restTemplate.getForObject("http://localhost:8070/product/update_count/" + orderParams.getProductId() + "/" + orderParams.getCount(), Result.class);
+        if (result.getCode() != HttpCode.SUCCESS){
             throw new RuntimeException("库存扣减失败");
         }
         log.info("库存扣减成功");
