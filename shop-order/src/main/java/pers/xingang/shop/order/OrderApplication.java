@@ -2,6 +2,7 @@ package pers.xingang.shop.order;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -13,6 +14,7 @@ import java.net.InetAddress;
  * @since 2024/04/10 15:04
  */
 @SpringBootApplication
+@EnableFeignClients
 public class OrderApplication {
     public static void main(String[] args) {
         org.springframework.boot.SpringApplication.run(OrderApplication.class, args);
