@@ -20,15 +20,16 @@ import pers.xingang.shop.utils.resp.Result;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 /**
- * 订单服务业务逻辑：add Nacos服务发现
+ * 订单服务业务逻辑 add 自定义负载均衡
  * @author xingang
  * @since 2024/04/10 16:44
  */
 @Slf4j
 @Service
-public class OrderServiceImplV2 implements OrderService {
+public class OrderServiceImplV3 implements OrderService {
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -110,9 +111,12 @@ public class OrderServiceImplV2 implements OrderService {
     private String getServiceUrl(String serviceName) {
         // 根据用户名获取所有的服务实例
         List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
-        // 获取一个服务实例
-        ServiceInstance serviceInstance = instances.get(0);
+        // 随机获取一个服务实例
+        int index = new Random().nextInt(instances.size());
+        ServiceInstance serviceInstance = instances.get(index);
         // 主机:端口号
-        return serviceInstance.getHost() + ":" + serviceInstance.getPort();
+        String url = serviceInstance.getHost() + ":" + serviceInstance.getPort();
+        log.info("负载均衡后的服务地址为:{}", url);
+        return url;
     }
 }

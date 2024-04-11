@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 public class OrderController {
-    @Resource(name = "orderServiceImplV2")
+    @Resource(name = "orderServiceImplV3")
     private OrderService orderService;
 
     @GetMapping(value = "/submit_order")
