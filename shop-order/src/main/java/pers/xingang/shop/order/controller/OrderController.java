@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 public class OrderController {
-    @Resource(name = "orderServiceImplV5")
+    @Resource(name = "orderServiceImplV6")
     private OrderService orderService;
 
     @GetMapping(value = "/submit_order")
@@ -37,5 +37,12 @@ public class OrderController {
     public String concurrentRequest() {
         log.info("测试业务在高并发场景下是否存在问题：{}", ++sum);
         return "success";
+    }
+
+
+    @GetMapping(value = "/test_sentinel")
+    public String testSentinel(){
+        log.info("测试Sentinel");
+        return "sentinel";
     }
 }

@@ -4,13 +4,14 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import pers.xingang.shop.bean.Product;
+import pers.xingang.shop.order.fallback.ProductServiceFallback;
 import pers.xingang.shop.utils.resp.Result;
 
 /**
  * @author xingang
  * @since 2024/04/11 18:24
  */
-@FeignClient(name = "server-product")
+@FeignClient(name = "server-product", fallback = ProductServiceFallback.class)
 public interface ProductService {
 
     /**
