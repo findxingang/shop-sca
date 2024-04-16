@@ -15,6 +15,10 @@ server:
   port: 8080
   servlet:
     context-path: /order
+  # 首先在这里限制了 Tomcat 最大线程数，然后再进行压力测试才会发现接口响应慢，默认是 200 个线程.
+  tomcat:
+    threads:
+      max: 20
 
 # MyBatis-Plus 配置
 mybatis-plus:

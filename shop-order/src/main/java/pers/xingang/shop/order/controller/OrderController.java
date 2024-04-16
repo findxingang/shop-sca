@@ -25,4 +25,17 @@ public class OrderController {
         orderService.saveOrder(orderParams);
         return "success";
     }
+
+
+
+    int sum = 0;
+    /**
+     * 首先需要限制Tomcat的线程数，否则观察不到接口响应慢
+     * 模拟一个并发的场景
+     */
+    @GetMapping(value = "/concurrent_request")
+    public String concurrentRequest() {
+        log.info("测试业务在高并发场景下是否存在问题：{}", ++sum);
+        return "success";
+    }
 }
