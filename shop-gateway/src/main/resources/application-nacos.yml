@@ -1,0 +1,51 @@
+server:
+  port: 10011
+spring:
+  # 应用名称
+  application:
+    name: server-gateway
+  # 微服务
+  cloud:
+    # 网关配置
+    gateway:
+      # 启用服务发现
+      discovery:
+        locator:
+          enabled: true
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"# 允许来自任意域的请求访问资源
+            allowedMethods: "*"       # 允许使用任意的HTTP方法
+            allowCredentials: true    # 允许浏览器发送包含身份凭证的请求，例如cookies或HTTP认证头
+            allowedHeaders: "*"       # 允许携带任意的请求头信息
+      # 路由信息
+      routes:
+        - id: user-gateway            # 当前路由的唯一标识
+          uri: discovery://server-user       # lb指的是从Nacos中按照微服务的名称获取微服务地址，并按照负载均衡的策略分发
+          order: 1                    # 路由的优先级，数字越小表示优先级越高
+          predicates:                 # 网关断言，也就是路由转发的条件，也是一个数组，可以配置多个路由转发条件
+            - Path=/server-user/**    # 当客户端请求的路径满足Path的规则时，进行路由转发操作
+          filters:                    # 网关过滤器，在过滤器中可以修改请求的参数和header信息，以及响应的结果和header信息，网关过滤器也是一个数组，可以配置多个过滤规则
+            - StripPrefix=1           # 网关在进行路由转发之前，会去掉1层访问路径
+
+        - id: product-gateway
+          uri: lb://server-product
+          order: 1
+          predicates:
+            - Path=/server-product/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-gateway
+          uri: lb://server-order
+          order: 1
+          predicates:
+            - Path=/server-order/**
+          filters:
+            - StripPrefix=1
+    # Nacos配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

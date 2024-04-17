@@ -1,0 +1,27 @@
+server:
+  port: 10011
+spring:
+  # 应用名称
+  application:
+    name: server-gateway
+  # 微服务
+  cloud:
+    # 网关配置
+    gateway:
+      # 启用服务发现
+      discovery:
+        locator:
+          enabled: true
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"# 允许来自任意域的请求访问资源
+            allowedMethods: "*"       # 允许使用任意的HTTP方法
+            allowCredentials: true    # 允许浏览器发送包含身份凭证的请求，例如cookies或HTTP认证头
+            allowedHeaders: "*"       # 允许携带任意的请求头信息
+
+    # Nacos配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
