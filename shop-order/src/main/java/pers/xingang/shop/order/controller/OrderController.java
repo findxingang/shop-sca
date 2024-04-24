@@ -45,4 +45,15 @@ public class OrderController {
         log.info("测试Sentinel");
         return "sentinel";
     }
+
+
+    /**
+     * 测试Sentinel关联流量控制
+     * @return
+     */
+    @GetMapping(value = "/test_sentinel2")
+    public String testSentinel2(){
+        log.info("测试Sentinel2");
+        return "sentinel2";
+    }
 }
