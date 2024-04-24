@@ -16,6 +16,30 @@ spring:
           enabled: true
           # 生成流控规则API名称的前缀。
           route-id-prefix: gateway-
+      routes:
+        - id: user-gateway
+          uri: lb://server-user
+          order: 1
+          predicates:
+            - Path=/server-user/**
+          filters:
+            - StripPrefix=1
+
+        - id: product-gateway
+          uri: lb://server-product
+          order: 1
+          predicates:
+            - Path=/server-product/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-gateway
+          uri: lb://server-order
+          order: 1
+          predicates:
+            - Path=/server-order/**
+          filters:
+            - StripPrefix=1
       # 跨域配置
       globalcors:
         cors-configurations:

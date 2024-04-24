@@ -1,5 +1,10 @@
 package pers.xingang.shop.gateway.config;
 
+import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants;
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition;
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPathPredicateItem;
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPredicateItem;
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
@@ -68,6 +73,7 @@ public class GatewayConfig {
     public void init() {
         this.initGatewayRules();
         this.initBlockHandlers();
+        this.initCustomizedApis();
     }
 
     /**
@@ -139,5 +145,24 @@ public class GatewayConfig {
             }
         };
         GatewayCallbackManager.setBlockHandler(blockRequestHandler);
+    }
+
+
+    private void initCustomizedApis() {
+        Set<ApiDefinition> definitions = new HashSet<>();
+        ApiDefinition api1 = new ApiDefinition("user_api1")
+                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
+                    // 以/server-user/user/api1 开头的请求
+                    add(new ApiPathPredicateItem().setPattern("/server-user/user/api1/**")
+                                    .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
+                }});
+        ApiDefinition api2 = new ApiDefinition("user_api2")
+                .setPredicateItems(new HashSet<ApiPredicateItem>() {{
+                    // 以/server-user/user/api2/demo1 完成的url路径匹配
+                    add(new ApiPathPredicateItem().setPattern("/server-user/user/api2/demo1"));
+                }});
+        definitions.add(api1);
+        definitions.add(api2);
+        GatewayApiDefinitionManager.loadApiDefinitions(definitions);
     }
 }
