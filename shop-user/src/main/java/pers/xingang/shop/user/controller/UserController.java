@@ -9,6 +9,8 @@ import pers.xingang.shop.bean.User;
 import pers.xingang.shop.user.service.UserService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author xingang
@@ -48,5 +50,14 @@ public class UserController {
     public String api2Demo2(){
         log.info("访问了api2Demo2接口");
         return "api2Demo2";
+    }
+
+    @GetMapping(value = "/api/filter1")
+    public String apiFilter1(HttpServletRequest request, HttpServletResponse response){
+        log.info("访问了apiFilter1接口");
+        String ip = request.getHeader("IP");
+        String name = request.getParameter("name");
+        log.info("ip = " + ip + ", name = " + name);
+        return "apiFilter1";
     }
 }

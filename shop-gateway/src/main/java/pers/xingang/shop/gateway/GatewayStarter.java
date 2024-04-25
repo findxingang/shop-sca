@@ -18,6 +18,7 @@ import java.net.InetAddress;
 @EnableDiscoveryClient
 public class GatewayStarter {
     public static void main(String[] args){
+        // 添加JVM启动参数，csp.sentinel.app.type = 1 时才会被Sentinel认为是网关项目
         System.setProperty("csp.sentinel.app.type", "1");
         SpringApplication.run(GatewayStarter.class, args);
     }

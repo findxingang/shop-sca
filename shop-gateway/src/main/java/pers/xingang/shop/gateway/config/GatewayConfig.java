@@ -73,7 +73,7 @@ public class GatewayConfig {
     public void init() {
         this.initGatewayRules();
         this.initBlockHandlers();
-        this.initCustomizedApis();
+        // this.initCustomizedApis();
     }
 
     /**
@@ -83,7 +83,7 @@ public class GatewayConfig {
         Set<GatewayFlowRule> rules = new HashSet<>();
 
         /**
-         * Sentinel整合SpringCloud Gateway使用的API类型为Route ID类型，也就是基于route维度时，
+         * Sentinel整合SpringCloud Gateway使用的API类型为Route ID类型，也就是基于route维度，
          * 由于Sentinel为SpringCloud Gateway网关生成的API名称规则如下：
          * 生成的规则为：${spring.cloud.gateway.discovery.locator.route-id-prefix}后面直接加上目标微服务的名称，如下所示。
          * ${spring.cloud.gateway.discovery.locator.route-id-prefix}目标微服务的名称
